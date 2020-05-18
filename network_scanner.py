@@ -19,7 +19,7 @@ def print_result(results_list):
     print("IP\t\t\tMAC Address")
     print("#######################################################")
     for client in results_list:
-        print(client)
+        print(client["ip"] + "\t\t" + client["mac"])
         print("#######################################################")
 
 scan_result = scan("192.168.1.1/24")
