@@ -4,7 +4,7 @@ import scapy.all as scapy
 import argparse as argp
 
 def get_arguments():
-    parser = argp.ArgumentParser(description='Scan the hosts and prints the result')
+    parser = argp.ArgumentParser(description='Send an ARP broadcast and prints the result')
     parser.add_argument('--target', '-t', dest="target", type=str,
         help='IP address of the host which you send the packet')
     args = parser.parse_args()
