@@ -7,8 +7,8 @@ def get_arguments():
     parser = argp.ArgumentParser(description='Scan the hosts and prints the result')
     parser.add_argument('--target', '-t', dest="target", type=str,
         help='IP address of the host which you send the packet')
-    options = parser.parse_args()
-    return options
+    args = parser.parse_args()
+    return args
 
 def scan(ip):
     arp_request = scapy.ARP(pdst=ip)
@@ -30,6 +30,6 @@ def print_result(results_list):
         print(client["ip"] + "\t\t" + client["mac"])
         print("#######################################################")
 
-options = get_arguments()
-scan_result = scan(options.target)
+args = get_arguments()
+scan_result = scan(args.target)
 print_result(scan_result)
