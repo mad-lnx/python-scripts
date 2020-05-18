@@ -3,19 +3,16 @@
 import scapy.all as scapy
 import argparse as argp
 
-parser = argp.ArgumentParser(description='Scan the hosts and prints the result')
-parser.add_argument('--ip', '-i', type=str,
+def get_arguments():
+    parser = argp.ArgumentParser(description='Scan the hosts and prints the result')
+    parser.add_argument('--target', '-t', dest="target", type=str,
         help='IP address of the host which you send the packet')
-parser.add_argument('--mac', '-m', type=str,
-        help='MAC address of the host which you send the packet')
+    options = parser.parse_args()
+    return options
 
-args = parser.parse_args()
-ip = args.ip
-mac = args.mac
-
-def scan(ip, mac):
+def scan(ip):
     arp_request = scapy.ARP(pdst=ip)
-    broadcast = scapy.Ether(dst=mac)
+    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
     arp_request_broadcast = broadcast/arp_request
     answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
 
@@ -33,5 +30,6 @@ def print_result(results_list):
         print(client["ip"] + "\t\t" + client["mac"])
         print("#######################################################")
 
-scan_result = scan(ip, mac)
+options = get_arguments()
+scan_result = scan(options.target)
 print_result(scan_result)
