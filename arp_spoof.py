@@ -5,8 +5,10 @@ import time as t
 #import sys as s
 #import argparse as argp
 
-#def interactive:
-#def get_arguments:
+# create a function to verify if the program is running in root environment
+# apply the ip forward on IPv4 packets
+#def interactive:   # interactive function
+#def get_arguments: # get_args of the program
 
 
 def get_mac_addr(ip):
