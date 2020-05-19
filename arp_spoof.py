@@ -5,11 +5,12 @@ import time as t
 #import sys as s
 #import argparse as argp
 
+# Small backlog and comments:
 # create a function to verify if the program is running in root environment
 # apply the ip forward on IPv4 packets
+# import the data to an csv file
 #def interactive:   # interactive function
 #def get_arguments: # get_args of the program
-
 
 def get_mac_addr(ip):
     arp_request = scapy.ARP(pdst=ip)
