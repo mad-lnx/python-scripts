@@ -14,6 +14,7 @@ def process_sniffed_packet(packet):
             for keyword in keywords:
                 if keyword in load:
                     print(load)
+                    break
 
 iface = input(print("[?] Insert your interface here: ", end=''))
 sniff(iface)
